@@ -15,7 +15,7 @@ export interface About {
 }
 
 export const getConfig = (): Promise<Config> => {
-  return axios.get('/config/')
+  return axios.get('/redisui/config')
     .then(ret => ret.data)
     .catch(err => {
       throw new Error(err?.response?.data);
@@ -23,7 +23,7 @@ export const getConfig = (): Promise<Config> => {
 }
 
 export const setConfig = (config: Config): Promise<Config> => {
-  return axios.post('/config', config)
+  return axios.post('/redisui/config', config)
     .then(ret => ret.data)
     .catch(err => {
       throw new Error(err?.response?.data);
@@ -31,12 +31,12 @@ export const setConfig = (config: Config): Promise<Config> => {
 }
 
 export const about = (): Promise<About> => {
-  return axios.get('/about')
+  return axios.get('/redisui/about')
     .then(ret => ret.data);
 }
 
 export const checkPort = (port: number): Promise<any> => {
-  return axios.get('/config/port/check', {params: {port}})
+  return axios.get('/redisui/config/port/check', {params: {port}})
     .then(ret => {
       return true
     });

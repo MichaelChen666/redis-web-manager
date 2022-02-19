@@ -2,6 +2,7 @@
   "name": "redis-web-manager",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/redisui",
   "dependencies": {
     "@fluentui/react": "^8.10.1",
     "@fluentui/react-icons": "^0.4.1",

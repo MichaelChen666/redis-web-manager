@@ -49,23 +49,23 @@ func main() {
 		panic(nil)
 	}
 
-	r.GET("/", func(c *gin.Context) {
+	r.GET("/redisui/", func(c *gin.Context) {
 		c.FileFromFS("/", http.FS(buildFiles))
 	})
 
-	r.GET("/manifest.json", func(c *gin.Context) {
+	r.GET("/redisui/manifest.json", func(c *gin.Context) {
 		c.FileFromFS("/manifest.json", http.FS(buildFiles))
 	})
 
-	r.GET("/favicon.ico", func(c *gin.Context) {
+	r.GET("/redisui/favicon.ico", func(c *gin.Context) {
 		c.FileFromFS("/favicon.ico", http.FS(buildFiles))
 	})
 
-	r.GET("/logo192.png", func(c *gin.Context) {
+	r.GET("/redisui/logo192.png", func(c *gin.Context) {
 		c.FileFromFS("/logo192.png", http.FS(buildFiles))
 	})
 
-	r.GET("/static/*filepath", func(c *gin.Context) {
+	r.GET("/redisui/static/*filepath", func(c *gin.Context) {
 		buildFiles, err := fs.Sub(webFS, "web/build/static")
 		if err != nil {
 			panic(nil)
@@ -73,7 +73,7 @@ func main() {
 		c.FileFromFS(c.Param("filepath"), http.FS(buildFiles))
 	})
 
-	r.GET("/about", func(c *gin.Context) {
+	r.GET("/redisui/about", func(c *gin.Context) {
 		var about = make(map[string]string)
 		about["version"] = version
 		about["commit"] = commit
@@ -84,7 +84,7 @@ func main() {
 	})
 
 	// config
-	configGroup := r.Group("/config")
+	configGroup := r.Group("/redisui/config")
 	{
 		configGroup.GET("/", func(c *gin.Context) {
 			conf, err := api.DefaultConfig.Get()
@@ -114,7 +114,7 @@ func main() {
 	// connections
 	// init connections
 	api.LoadConnections()
-	r.GET("/connections", func(c *gin.Context) {
+	r.GET("/redisui/connections", func(c *gin.Context) {
 		connections, err := api.Connections()
 		if nil != err {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("error: %s", err))
@@ -122,7 +122,7 @@ func main() {
 		}
 		c.JSON(http.StatusOK, connections)
 	})
-	connectioniGroup := r.Group("/connection")
+	connectioniGroup := r.Group("/redisui/connection")
 	{
 		connectioniGroup.POST("/test", func(c *gin.Context) {
 			connection := &api.Connection{}
@@ -184,7 +184,7 @@ func main() {
 		})
 	}
 	// convert
-	convertGroup := r.Group("/convert")
+	convertGroup := r.Group("/redisui/convert")
 	{
 		convertGroup.POST("/length", func(c *gin.Context) {
 			convert := &api.Convert{}
